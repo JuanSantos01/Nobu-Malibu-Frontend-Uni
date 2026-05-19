@@ -1,0 +1,716 @@
+/* 🌆 Fondo general del formulario */
+.reservation-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdf6e3, #f9f5f0), url('/assets/logo.png');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-attachment: fixed, fixed;
+  background-repeat: no-repeat, no-repeat;
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+  
+  /* Overlay para mejorar legibilidad */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(253, 246, 227, 0.1), rgba(249, 245, 240, 0.1));
+    pointer-events: none;
+  }
+}
+
+/* 🧾 Tarjeta del formulario */
+.reservation-form {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 2;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* 🏷️ Título */
+h2 {
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #e67e22, #e74c3c);
+    border-radius: 2px;
+  }
+}
+
+/* 📸 Contenedor de imagen */
+.image-container {
+  position: relative;
+  text-align: center;
+  margin-top: 0;
+  border-left: 1px solid #e8e8e8;
+  padding-left: 30px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+}
+
+.table-image {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* 💬 Texto de recomendación */
+.recommendation {
+  font-style: italic;
+  font-size: 15px;
+  color: #7f8c8d;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  padding: 0 10px;
+}
+
+/* 🚀 Botón principal */
+/* 🚀 Botón principal - VERSIÓN MEJORADA */
+.submit-btn {
+  width: 100%;
+  margin-top: 25px;
+  background: linear-gradient(135deg, #e67e22, #e74c3c);
+  color: white;
+  padding: 16px 24px;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.8px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 
+    0 6px 20px rgba(230, 126, 34, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-transform: uppercase;
+  gap: 10px;
+
+  /* Efecto de brillo al hover */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.6s ease;
+  }
+
+  /* Icono del botón */
+  .btn-icon {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+  }
+
+  /* Estados del botón */
+  &:hover:not([disabled]) {
+    background: linear-gradient(135deg, #d35400, #c0392b);
+    box-shadow: 
+      0 10px 30px rgba(230, 126, 34, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px) scale(1.02);
+
+    &::before {
+      left: 100%;
+    }
+
+    .btn-icon {
+      transform: translateX(3px);
+    }
+  }
+
+  &:active:not([disabled]) {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 
+      0 4px 15px rgba(230, 126, 34, 0.4),
+      inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.1s ease;
+  }
+
+  /* Estado deshabilitado */
+  &:disabled {
+    background: linear-gradient(135deg, #cccccc, #b3b3b3);
+    color: #888888;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    &::before {
+      display: none;
+    }
+
+    .btn-icon {
+      opacity: 0.5;
+    }
+  }
+
+  /* Estado de carga */
+  &.loading {
+    pointer-events: none;
+    
+    .btn-text {
+      opacity: 0.7;
+    }
+
+    .btn-icon {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  /* Efecto de pulso para llamar la atención */
+  &.pulse {
+    animation: pulse 2s infinite;
+  }
+}
+
+/* Animaciones */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 
+      0 6px 20px rgba(230, 126, 34, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 6px 30px rgba(230, 126, 34, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 6px 20px rgba(230, 126, 34, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Variantes de color del botón */
+.submit-btn {
+  /* Variante success */
+  &.success {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+
+    &:hover:not([disabled]) {
+      background: linear-gradient(135deg, #229954, #27ae60);
+      box-shadow: 0 10px 30px rgba(39, 174, 96, 0.6);
+    }
+  }
+
+  /* Variante secondary */
+  &.secondary {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+
+    &:hover:not([disabled]) {
+      background: linear-gradient(135deg, #2980b9, #2471a3);
+      box-shadow: 0 10px 30px rgba(52, 152, 219, 0.6);
+    }
+  }
+
+  /* Variante outline */
+  &.outline {
+    background: transparent;
+    color: #e67e22;
+    border: 2px solid #e67e22;
+    box-shadow: none;
+
+    &:hover:not([disabled]) {
+      background: #e67e22;
+      color: white;
+      box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+    }
+  }
+}
+
+/* Tamaños del botón */
+.submit-btn {
+  /* Tamaño pequeño */
+  &.btn-sm {
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    
+    .btn-icon {
+      font-size: 14px;
+    }
+  }
+
+  /* Tamaño grande */
+  &.btn-lg {
+    padding: 20px 30px;
+    font-size: 18px;
+    border-radius: 15px;
+    
+    .btn-icon {
+      font-size: 20px;
+    }
+  }
+}
+
+/* Responsive para el botón */
+@media (max-width: 768px) {
+  .submit-btn {
+    padding: 14px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+
+    &:hover:not([disabled]) {
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .submit-btn {
+    padding: 12px 18px;
+    font-size: 15px;
+    border-radius: 10px;
+
+    .btn-icon {
+      font-size: 14px;
+    }
+  }
+}
+
+/* Efecto de confeti (opcional para éxito) */
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+.submit-btn.success::after {
+  content: '🎉';
+  position: absolute;
+  font-size: 20px;
+  animation: confetti 1s ease-out forwards;
+}
+
+/* 📅 Campo de fecha */
+.custom-date-picker {
+  width: 100%;
+  font-size: 16px;
+
+  .ant-picker {
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+    
+    &:hover, &.ant-picker-focused {
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+  }
+
+  .ant-picker-input > input {
+    font-size: 16px;
+    color: #333;
+  }
+}
+
+/* ❌ Campo con error */
+.invalid-date {
+  border: 2px solid #ff4d4f !important;
+  background-color: #fff1f0;
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.1);
+}
+
+/* Indicador de imagen */
+.image-indicator {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2;
+  
+  .indicator-tag {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 15px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Detalles de la mesa */
+.table-details {
+  margin-top: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  border-left: 4px solid #3498db;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  
+  p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #2c3e50;
+    line-height: 1.4;
+    
+    strong {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+  }
+}
+
+/* Estilos para el input personalizado */
+.table-input {
+  width: 100%;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: white;
+  }
+}
+
+.table-options-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 350px;
+  overflow-y: auto;
+  margin-top: 5px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.table-option-button {
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  &:hover {
+    background: linear-gradient(135deg, #f0f7ff, #e6f7ff);
+    transform: translateX(8px);
+    border-left: 3px solid #3498db;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.selected {
+    background: linear-gradient(135deg, #e6f7ff, #d6e8ff);
+    border-left: 4px solid #1890ff;
+    
+    &::after {
+      content: '✓';
+      position: absolute;
+      right: 15px;
+      color: #1890ff;
+      font-weight: bold;
+    }
+  }
+}
+
+.table-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 15px;
+}
+
+.table-guests {
+  font-size: 12px;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+/* Estilos generales para formularios NG-ZORRO */
+nz-form-item {
+  margin-bottom: 20px;
+}
+
+.ant-form-item-label > label {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 15px;
+}
+
+.ant-input, .ant-picker, .ant-select-selector {
+  border-radius: 10px !important;
+  border: 2px solid #e0e0e0 !important;
+  transition: all 0.3s ease !important;
+  background-color: #f9f9f9 !important;
+
+  &:focus, &:hover {
+    border-color: #3498db !important;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2) !important;
+    background-color: white !important;
+  }
+}
+
+.ant-select-dropdown {
+  border-radius: 10px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Asegurar que el contenedor del formulario tenga posición relativa */
+nz-form-control {
+  position: relative;
+}
+
+/* 📱 Responsive: Diseño móvil */
+@media (max-width: 768px) {
+  .reservation-container {
+    padding: 20px 15px;
+    margin-top: 20px;
+  }
+
+  .reservation-form {
+    padding: 25px 20px;
+    border-radius: 15px;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    
+    &::after {
+      width: 60px;
+      bottom: -8px;
+    }
+  }
+
+  .image-container {
+    margin-top: 30px;
+    padding-left: 0;
+    border-left: none;
+    padding: 20px;
+  }
+
+  nz-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  nz-col {
+    width: 100% !important;
+    max-width: 100%;
+    padding: 8px 0;
+  }
+
+  .custom-date-picker {
+    font-size: 14px;
+
+    .ant-picker-input > input {
+      font-size: 14px;
+    }
+  }
+
+  .table-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .submit-btn {
+    font-size: 16px;
+    padding: 14px;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .image-indicator {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .table-options-container {
+    position: relative;
+    margin-top: 8px;
+  }
+
+  .table-details {
+    padding: 15px;
+    
+    p {
+      font-size: 13px;
+    }
+  }
+}
+
+/* 📱 Extra pequeño */
+@media (max-width: 480px) {
+  .reservation-form {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .custom-date-picker {
+    font-size: 14px;
+
+    .ant-picker-input > input {
+      font-size: 14px;
+    }
+  }
+
+  .submit-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .table-details {
+    padding: 12px;
+    
+    p {
+      font-size: 12px;
+    }
+  }
+
+  .table-option-button {
+    padding: 12px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .table-guests {
+      margin-top: 5px;
+      font-size: 11px;
+    }
+  }
+
+  .image-container {
+    padding: 15px;
+  }
+
+  .recommendation {
+    font-size: 14px;
+  }
+}
+
+/* Animaciones adicionales */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.reservation-form {
+  animation: pulse 2s ease-in-out;
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Modo oscuro opcional */
+@media (prefers-color-scheme: dark) {
+  .reservation-form {
+    background: rgba(40, 44, 52, 0.95);
+    color: #ffffff;
+  }
+  
+  h2, .ant-form-item-label > label {
+    color: #ffffff;
+  }
+  
+  .table-details {
+    background: #2c3e50;
+    color: #ffffff;
+  }
+}

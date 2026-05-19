@@ -1,0 +1,100 @@
+<div class="admin-dashboard-wrapper">
+  <form nz-form [formGroup]="validateForm" (submit)="submitForm()" class="search-container">
+    <nz-input-group [nzPrefix]="prefixIcon" class="search-input-wrapper">
+      <input
+        nz-input
+        placeholder="Enter keyword to search"
+        nzSize="large"
+        formControlName="title"
+      />
+    </nz-input-group>
+    <ng-template #prefixIcon>
+      <span nz-icon nzType="search" class="search-icon"></span>
+    </ng-template>
+    <button 
+      nz-button 
+      [nzSize]="size" 
+      nzType="primary" 
+      [disabled]="validateForm.invalid" 
+      class="search-btn" 
+      [nzLoading]="isSpinning"
+    >
+      Search
+    </button>
+  </form>
+
+  <div class="content-container">
+    <nz-spin [nzSpinning]="isSpinning" [nzDelay]="100">
+      <div class="categories-container">
+        <!-- Mostrar categorías filtradas -->
+        <div 
+          class="category-card" 
+          *ngFor="let category of filteredCategories" 
+          @fadeInUp
+        >
+          <div class="category-content">
+            <div class="image-container">
+              <img
+                class="profile"
+                [src]="category.processedImg"
+                alt="{{ category.name }}"
+                onerror="this.src='https://via.placeholder.com/200x150?text=No+Image'"
+              />
+            </div>
+            <div class="info-container">
+              <h2 class="category-title">{{ category.name }}</h2>
+              <hr class="divider" />
+              <p class="category-description">
+                <span class="label">Description:</span> 
+                <b>{{ category.description || 'No description available' }}</b>
+              </p>
+              <hr class="divider" />
+              <div class="button-container">
+                <button
+                  nzSize="small"
+                  nz-button
+                  nzType="primary"
+                  [routerLink]="'/admin/' + category.id + '/view_products'"
+                  class="action-btn view-btn"
+                >
+                  View Products
+                </button>
+                <button
+                  nzSize="small"
+                  nz-button
+                  nzType="primary"
+                  [routerLink]="'/admin/' + category.id + '/product'"
+                  class="action-btn post-btn"
+                >
+                  Post Product
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mensaje cuando no hay resultados -->
+        <div 
+          *ngIf="filteredCategories.length === 0 && !isSpinning" 
+          class="no-results" 
+          @fadeIn
+        >
+          <span nz-icon nzType="frown" class="no-results-icon"></span>
+          <h3>No categories found</h3>
+          <p>Try adjusting your search terms or check if categories are loaded</p>
+        </div>
+
+        <!-- Mensaje cuando no hay categorías cargadas -->
+        <div 
+          *ngIf="categories.length === 0 && !isSpinning" 
+          class="no-results" 
+          @fadeIn
+        >
+          <span nz-icon nzType="database" class="no-results-icon"></span>
+          <h3>No categories available</h3>
+          <p>There are no categories to display at the moment</p>
+        </div>
+      </div>
+    </nz-spin>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<!-- prediction.component.html -->
+<div class="prediction-container" [class.loading]="loading">
+  <div class="header">
+    <h2 class="title">Nobu Malibu - Attendance Prediction</h2>
+    <p class="subtitle">Complete reservation details to analyze attendance probability</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid" novalidate>
+    <!-- Anticipación -->
+    <div class="field">
+      <label class="field-label">Advance Booking (days)</label>
+      <div class="input-container">
+        <input type="number" formControlName="anticipacionDias" min="0" class="input-field" />
+        <span class="input-icon">📅</span>
+      </div>
+    </div>
+
+    <!-- Día de la semana -->
+    <div class="field">
+      <label class="field-label">Day of the Week</label>
+      <div class="input-container">
+        <select formControlName="diaSemana" class="input-field">
+          <option value="" disabled selected>Select day</option>
+          <option *ngFor="let d of dias()" [value]="d">{{ d }}</option>
+        </select>
+        <span class="input-icon">📆</span>
+      </div>
+    </div>
+
+    <!-- Hora -->
+    <div class="field">
+      <label class="field-label">Reservation Time</label>
+      <div class="input-container">
+        <select formControlName="hora" class="input-field">
+          <option value="" disabled selected>Select time</option>
+          <option *ngFor="let h of horas" [value]="h">{{ h }}</option>
+        </select>
+        <span class="input-icon">⏰</span>
+      </div>
+    </div>
+
+    <!-- Historial No Show -->
+    <div class="field">
+      <label class="field-label">Previous No-Shows</label>
+      <div class="input-container">
+        <select formControlName="historialNoShow" class="input-field">
+          <option value="" disabled selected>Select option</option>
+          <option *ngFor="let opt of opcionesSiNo()" [value]="opt">{{ opt === 'yes' ? 'Yes' : 'No' }}</option>
+        </select>
+        <span class="input-icon">📊</span>
+      </div>
+    </div>
+
+    <!-- Recordatorio enviado -->
+    <div class="field">
+      <label class="field-label">Reminder Sent</label>
+      <div class="input-container">
+        <select formControlName="recordatorioEnviado" class="input-field">
+          <option value="" disabled selected>Select option</option>
+          <option *ngFor="let opt of opcionesSiNo()" [value]="opt">{{ opt === 'yes' ? 'Yes' : 'No' }}</option>
+        </select>
+        <span class="input-icon">✉️</span>
+      </div>
+    </div>
+
+    <!-- Festivo -->
+    <div class="field">
+      <label class="field-label">Holiday Period</label>
+      <div class="input-container">
+        <select formControlName="festivo" class="input-field">
+          <option value="" disabled selected>Select option</option>
+          <option *ngFor="let opt of opcionesSiNo()" [value]="opt">{{ opt === 'yes' ? 'Yes' : 'No' }}</option>
+        </select>
+        <span class="input-icon">🎉</span>
+      </div>
+    </div>
+
+    <!-- Botón -->
+    <button class="submit-btn" [disabled]="loading || form.invalid">
+      <span class="btn-text">{{ loading ? "Analyzing..." : "Analyze Probability" }}</span>
+      <span class="btn-icon" *ngIf="!loading">📈</span>
+      <div class="btn-loader" *ngIf="loading"></div>
+    </button>
+  </form>
+
+  <!-- RESULTADO -->
+  <div *ngIf="result" class="result-container" [@fadeIn]>
+    <div class="result-card" [class.low-probability]="result.probability < 0.7" [class.high-probability]="result.probability >= 0.7">
+      <div class="result-header">
+        <div class="probability-badge" [class.low]="result.probability < 0.7" [class.high]="result.probability >= 0.7">
+          {{ (result.probability * 100) | number:'1.0-1' }}% Probability
+        </div>
+        <div class="attendance-status">
+          {{ result.prediction === 'yes' ? 'Risk of No-Show' : 'Expected to Attend' }}
+        </div>
+      </div>
+      
+      <div class="result-content">
+        <div class="probability-visual">
+          <div class="probability-scale">
+            <span class="scale-label">Low</span>
+            <div class="probability-bar">
+              <div class="probability-fill" [style.width.%]="result.probability * 100" 
+                   [class.low]="result.probability < 0.7" 
+                   [class.high]="result.probability >= 0.7"></div>
+            </div>
+            <span class="scale-label">High</span>
+          </div>
+        </div>
+
+        <div class="recommendation-section">
+          <div class="recommendation-icon">💡</div>
+          <div class="recommendation-content">
+            <h4>Management Recommendations</h4>
+            <div class="recommendation-text" [innerHTML]="getRecommendation()"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

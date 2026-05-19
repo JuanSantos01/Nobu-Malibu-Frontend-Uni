@@ -1,0 +1,65 @@
+<div class="signup-container">
+  <div class="signup-content">
+    <div class="logo-container">
+      <div class="led-ring"></div>
+      <img src="/assets/logo3.png" alt="Nobu Logo" class="signup-logo" />
+    </div>
+
+    <div class="signup-form">
+      <h2>Create an Account</h2>
+      <p>Sign up to get started</p>
+
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Invalid email">
+            <nz-input-group nzPrefixIcon="mail">
+              <input nz-input placeholder="Email" formControlName="email" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="errorPass">
+            <nz-input-group nzPrefixIcon="lock">
+              <input nz-input type="password" placeholder="Password" formControlName="password" />
+            </nz-input-group>
+            <ng-template #errorPass let-control>
+              <ng-container *ngIf="control.hasError('required')">Password is required!</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="errorTpl">
+            <nz-input-group nzPrefixIcon="check">
+              <input nz-input type="password" placeholder="Confirm Password" formControlName="checkPassword" />
+            </nz-input-group>
+            <ng-template #errorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Please confirm your password!</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="userErrorTpl">
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input placeholder="Name" formControlName="name" />
+            </nz-input-group>
+            <ng-template #userErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Please input your name!</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <button nz-button nzType="primary" class="signup-btn" [disabled]="validateForm.invalid">
+          <span class="btn-text">Register</span>
+          <div class="btn-shine"></div>
+        </button>
+
+        <div class="signup-footer">
+          Already have an account? <a routerLink="/login">Login now</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

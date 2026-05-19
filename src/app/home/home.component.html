@@ -1,0 +1,216 @@
+<div class="hero">
+  <!-- Background particles -->
+  <div class="particles"></div>
+  
+  <div class="overlay"></div>
+  
+  <div class="home-content">
+    <!-- Logo with LED effect -->
+    <div class="logo-container">
+      <div class="led-ring"></div>
+      <img src="assets/logo3.png" alt="Nobu Malibu Logo" class="home-logo" />
+    </div>
+    
+    <h1 class="title">
+      Welcome to <span class="brand-glow">Nobu Malibu</span>
+    </h1>
+
+    <p class="subtitle">
+      Where Japanese tradition meets modern culinary innovation
+    </p>
+
+    <div class="divider"></div>
+
+    <!-- Restaurant Statistics -->
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number">{{animatedStats.years}}<span class="plus">+</span></div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">{{animatedStats.awards}}<span class="plus">+</span></div>
+        <div class="stat-label">International Awards</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">{{animatedStats.dishes}}<span class="plus">+</span></div>
+        <div class="stat-label">Exclusive Dishes</div>
+      </div>
+    </div>
+
+    <!-- Restaurant Description -->
+    <div class="restaurant-description" #restaurantDescription>
+      <div class="description-content">
+        <div class="section-header">
+          <h2>A Unique Culinary Experience</h2>
+          <p class="section-subtitle">Where every detail tells a story</p>
+        </div>
+
+        <p class="intro-text">
+          In the heart of Malibu, Nobu redefines culinary excellence by fusing 
+          <span class="highlight">ancient Japanese flavors</span> with 
+          premium California ingredients. Our restaurant is not just a dining destination, 
+          it's a <span class="highlight">sensory journey</span> that combines art, tradition, 
+          and innovation in every dish.
+        </p>
+        
+        <!-- Main Features -->
+        <div class="features-grid">
+          <div class="feature-card" *ngFor="let feature of features">
+            <div class="feature-header">
+              <div class="feature-icon">{{feature.icon}}</div>
+              <h3>{{feature.title}}</h3>
+            </div>
+            <p>{{feature.description}}</p>
+            <div class="feature-details">
+              <span class="detail-item">⭐ {{feature.detail1}}</span>
+              <span class="detail-item">🎯 {{feature.detail2}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Philosophy and Chef -->
+        <div class="philosophy-section">
+          <div class="philosophy-content">
+            <div class="philosophy-text">
+              <h2>The Nobu Philosophy</h2>
+              <p>
+                Under the vision of Chef Nobu Matsuhisa, we have created a culinary sanctuary 
+                where perfection meets passion. Every ingredient is meticulously selected, 
+                every technique is executed with millimeter precision, and every dish is 
+                an edible work of art.
+              </p>
+              <p>
+                Our commitment to <span class="highlight">sustainability</span> 
+                and <span class="highlight">local sourcing</span> allows us 
+                to offer an authentic experience while honoring our natural environment.
+              </p>
+              <div class="signature">
+                <span class="signature-text">- Chef Nobu Matsuhisa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Specialties -->
+        <div class="specialties-section">
+          <h2>Our Signature Dishes</h2>
+          <div class="specialties-grid">
+            <div class="specialty-item" *ngFor="let specialty of specialties">
+              <div class="specialty-image"></div>
+              <div class="specialty-content">
+                <h4>{{specialty.name}}</h4>
+                <p>{{specialty.description}}</p>
+                <span class="specialty-price">{{specialty.price}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Premium Contact Section -->
+    <div class="contact-section">
+      <div class="contact-header">
+        <h2>Personalized Experience</h2>
+        <p>Reservations, private events, and culinary consultations</p>
+      </div>
+      
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">🎯</div>
+          <h3>Exclusive Reservations</h3>
+          <p>Secure your table for an unforgettable gastronomic experience</p>
+          <div class="contact-method" (click)="callPhone()">
+            <span class="method-label">Call us directly</span>
+            <span class="method-value">{{contactPhone}}</span>
+          </div>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <h3>Culinary Advisory</h3>
+          <p>Consult about menus, events, and personalized experiences</p>
+          <div class="contact-method" (click)="sendEmail()">
+            <span class="method-label">Professional email</span>
+            <span class="method-value">{{contactEmail}}</span>
+          </div>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">⭐</div>
+          <h3>Private Events</h3>
+          <p>Exclusive celebrations and business dinners</p>
+          <div class="contact-info">
+            <span>Limited availability</span>
+            <span>Consult with 48h notice</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Improved Navigation -->
+  <div class="scroll-indicator" (click)="scrollToContent()" *ngIf="!isScrolled">
+    <div class="scroll-text">Explore Experience</div>
+    <div class="scroll-arrow">
+      <div class="arrow-line"></div>
+    </div>
+  </div>
+
+  <div class="back-to-top" (click)="scrollToTop()" *ngIf="isScrolled">
+    <div class="back-arrow">↑</div>
+    <div class="back-text">Top</div>
+  </div>
+<!-- ================= CHATBOT PRO MAX ================= -->
+<div class="chatbot">
+
+  <!-- BOTÓN -->
+  <div class="chatbot-btn" (click)="toggleChat()">
+    💬
+  </div>
+
+  <!-- HINT -->
+  <div class="chatbot-hint" *ngIf="showHint" (click)="openChat()">
+    👋 Need help choosing your experience?
+  </div>
+
+  <!-- CHAT -->
+  <div class="chatbot-box" *ngIf="isOpen">
+
+    <!-- HEADER -->
+    <div class="chatbot-header">
+      <span>Nobu Assistant</span>
+      <button (click)="toggleChat()">✕</button>
+    </div>
+
+    <!-- MENSAJES -->
+    <div class="chatbot-body">
+
+      <div *ngFor="let msg of messages" 
+           [class.user]="msg.role === 'user'"
+           [class.bot]="msg.role === 'bot'">
+        {{ msg.text }}
+      </div>
+
+      <!-- TYPING -->
+      <div *ngIf="isTyping" class="typing">
+        <span></span><span></span><span></span>
+      </div>
+
+      <!-- QUICK -->
+      <div class="quick" *ngIf="showQuick">
+        <button (click)="quick('menu')">View Menu</button>
+        <button (click)="quick('reserve')">Reserve</button>
+        <button (click)="quick('location')">Location</button>
+      </div>
+
+    </div>
+
+    <!-- INPUT -->
+    <div class="chatbot-input">
+      <input [(ngModel)]="input" (keyup.enter)="send()" placeholder="Ask something..." />
+      <button (click)="send()">➤</button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="dashboard-wrapper">
+  <form nz-form [formGroup]="validateForm" (submit)="submitForm()" class="search-container">
+    <nz-input-group [nzPrefix]="prefixIcon" class="search-input-group">
+      <input
+        nz-input
+        placeholder="Enter Keyword To Search"
+        nzSize="large"
+        formControlName="title"
+        (input)="onSearchChange()"
+      />
+    </nz-input-group>
+    <ng-template #prefixIcon>
+      <i nz-icon nzType="search" class="search-icon"></i>
+    </ng-template>
+    <button nz-button [nzSize]="size" nzType="primary" [disabled]="validateForm.invalid" class="search-button">
+      Search
+    </button>
+  </form>
+
+  <div class="categories-list">
+    <div class="child" *ngFor="let category of categories; let i = index" [style.animation-delay]="(i * 0.1) + 's'">
+      <div nz-row [nzGutter]="16" class="category-row">
+        <div nz-col [nzXs]="24" [nzSm]="8" class="image-col">
+          <img
+            class="profile"
+            [src]="category.processedImg"
+            alt="profile"
+          />
+        </div>
+        <div nz-col [nzXs]="24" [nzSm]="16" class="content-col">
+          <h2>{{ category.name }}</h2>
+          <hr />
+          <h5>Description: <b>{{ category.description }}</b></h5>
+          <hr />
+          <div class="button-container">
+            <button
+              nzSize="small"
+              nz-button
+              nzType="primary"
+              [routerLink]="'/customer/' + category.id + '/view_products'"
+              class="view-products-btn"
+            >
+              View Products
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

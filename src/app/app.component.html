@@ -1,0 +1,155 @@
+<!-- Header para usuarios no logueados -->
+<div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
+  <nz-header class="main-header">
+    <div class="nav-container">
+      <div class="logo-container">
+        <img src="assets/logo3.png" alt="Logo" class="logo" />
+        <a class="brand-name" routerLink="/home">
+          <span class="brand-full">Nobu Malibu</span>
+          <span class="brand-short">Nobu</span>
+        </a>
+      </div>
+      
+      <div class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Overlay para cerrar el menú -->
+      <div class="nav-overlay" [class.open]="menuOpen" (click)="closeMenu()"></div>
+      
+      <div class="nav-links" [class.open]="menuOpen">
+        <a nz-button nzType="link" routerLink="/home" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Home</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/register" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">📝</span>
+          <span class="nav-text">Sign Up</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">🔐</span>
+          <span class="nav-text">Login</span>
+        </a>
+      </div>
+    </div>
+  </nz-header>
+</div>
+
+<!-- Header para admin -->
+<div *ngIf="isAdminLoggedIn">
+  <nz-header class="main-header">
+    <div class="nav-container">
+      <div class="logo-container">
+        <img src="assets/logo3.png" alt="Logo" class="logo" />
+        <a class="brand-name" routerLink="/admin/dashboard">
+          <span class="brand-full">Nobu Malibu</span>
+          <span class="brand-short">Nobu</span>
+        </a>
+      </div>
+      
+      <div class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Overlay para cerrar el menú -->
+      <div class="nav-overlay" [class.open]="menuOpen" (click)="closeMenu()"></div>
+      
+      <div class="nav-links" [class.open]="menuOpen">
+        <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">🍽️</span>
+          <span class="nav-text">Menu</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/admin/category" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">📂</span>
+          <span class="nav-text">Categories</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/admin/reservations" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">📅</span>
+          <span class="nav-text">Reservations</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/admin/prediction" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">🔮</span>
+          <span class="nav-text">Prediction</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/admin/datos" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">📈</span>
+          <span class="nav-text">Data</span>
+        </a>
+        <a nz-button nzType="link" class="logout-btn" (click)="confirmLogout()">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </a>
+      </div>
+    </div>
+  </nz-header>
+</div>
+
+<!-- Header para customer -->
+<div *ngIf="isCustomerLoggedIn">
+  <nz-header class="main-header">
+    <div class="nav-container">
+      <div class="logo-container">
+        <img src="assets/logo3.png" alt="Logo" class="logo" />
+        <a class="brand-name" routerLink="/login">
+          <span class="brand-full">Nobu Malibu</span>
+          <span class="brand-short">Nobu</span>
+        </a>
+      </div>
+      
+      <div class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Overlay para cerrar el menú -->
+      <div class="nav-overlay" [class.open]="menuOpen" (click)="closeMenu()"></div>
+      
+      <div class="nav-links" [class.open]="menuOpen">
+        <a nz-button nzType="link" routerLink="/customer/dashboard" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">🍽️</span>
+          <span class="nav-text">Menu</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/customer/reservation" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">📅</span>
+          <span class="nav-text">Reservation</span>
+        </a>
+        <a nz-button nzType="link" routerLink="/customer/my_reservations" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">📋</span>
+          <span class="nav-text">My Reservations</span>
+        </a>
+        <a nz-button nzType="link" class="logout-btn" (click)="confirmLogout()">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </a>
+      </div>
+    </div>
+  </nz-header>
+</div>
+
+<!-- Modal de confirmación para logout -->
+<nz-modal 
+  [(nzVisible)]="isLogoutModalVisible"
+  nzTitle="Confirm Logout" 
+  (nzOnCancel)="handleLogoutCancel()"
+  (nzOnOk)="handleLogoutOk()"
+  nzOkText="Yes, Log Out"
+  nzCancelText="Cancel"
+  nzOkType="primary"
+  nzOkDanger>
+  <div *nzModalContent>
+    <div class="logout-modal-content">
+      <div class="logout-icon">⚠️</div>
+      <h3>Are you sure you want to log out?</h3>
+      <p>You will be redirected to the homepage and will need to log in again to access your account.</p>
+    </div>
+  </div>
+</nz-modal>
+
+<div class="router-container">
+  <router-outlet></router-outlet>
+</div>

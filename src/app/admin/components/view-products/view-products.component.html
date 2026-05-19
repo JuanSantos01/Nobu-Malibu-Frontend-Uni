@@ -1,0 +1,130 @@
+<form
+  nz-form
+  [formGroup]="validateForm"
+  class="search-form"
+  (submit)="submitForm()"
+>
+  <div class="search-container">
+    <input
+      nz-input
+      placeholder="Search products..."
+      nzSize="large"
+      class="search-input"
+      formControlName="title"
+    />
+    <button
+      nz-button
+      nzSize="large"
+      nzType="primary"
+      class="search-button"
+      [disabled]="validateForm.invalid"
+    >
+      <span nz-icon nzType="search"></span>
+      Search
+    </button>
+  </div>
+</form>
+
+<div class="product-list">
+  <div class="spacer"></div>
+
+  <div class="product-card" *ngFor="let product of Products; let i = index" @fadeInUp>
+    <div nz-row [nzGutter]="16" class="product-row">
+      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8">
+        <div class="image-container">
+          <img
+            class="product-img"
+            [src]="product.processedImg"
+            alt="{{ product.name }}"
+            (click)="zoomImage(product)"
+          />
+        </div>
+      </div>
+      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="16">
+        <h2 class="product-title" (click)="viewProductDetails(product)">
+          {{ product.name }}
+        </h2>
+        
+        <div class="product-details">
+          <div class="detail-item">
+            <span nz-icon nzType="dollar" class="detail-icon"></span>
+            <span class="detail-label">Price:</span>
+            <span class="detail-value">{{ product.price | currency }}</span>
+          </div>
+          
+          <div class="detail-item">
+            <span nz-icon nzType="info-circle" class="detail-icon"></span>
+            <span class="detail-label">Description:</span>
+            <span class="detail-value">{{ product.description }}</span>
+          </div>
+          
+          <div class="detail-item">
+            <span nz-icon nzType="tag" class="detail-icon"></span>
+            <span class="detail-label">Category:</span>
+            <span class="detail-value">{{ product.categoryName }}</span>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <button
+            nzSize="small"
+            nz-button
+            nzType="default"
+            class="action-btn update-btn"
+            [routerLink]="'/admin/edit_product/' + product.id"
+          >
+            <span nz-icon nzType="edit"></span>
+            Edit
+          </button>
+          <button
+            nzSize="small"
+            nz-button
+            nzType="default"
+            class="action-btn delete-btn"
+            (click)="confirmDelete(product)"
+            nzDanger
+          >
+            <span nz-icon nzType="delete"></span>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="Products.length === 0" class="empty-state" @fadeIn>
+    <span nz-icon nzType="inbox" class="empty-icon"></span>
+    <h3>No products found</h3>
+    <p>Try adjusting your search criteria</p>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<nz-modal
+  [(nzVisible)]="isDeleteModalVisible"
+  nzTitle="Confirm Delete"
+  nzContent="Are you sure you want to delete this product? This action cannot be undone."
+  nzOkText="Yes, Delete"
+  nzCancelText="Cancel"
+  nzOkType="primary"
+  nzOkDanger
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleDelete()"
+>
+</nz-modal>
+
+<!-- Image Zoom Modal -->
+<nz-modal
+  [(nzVisible)]="isImageModalVisible"
+  nzTitle="{{ selectedProduct?.name }}"
+  nzFooter="null"
+  (nzOnCancel)="closeImageModal()"
+  nzWidth="60%"
+>
+  <img
+    [src]="selectedProduct?.processedImg"
+    alt="{{ selectedProduct?.name }}"
+    class="zoomed-image"
+  />
+</nz-modal>

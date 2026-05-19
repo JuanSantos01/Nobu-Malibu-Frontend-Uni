@@ -1,0 +1,164 @@
+<div class="reservation-container">
+  <div class="overlay"></div>
+
+  <nz-spin [nzSpinning]="isSpinning" nzSize="large" nzTip="Submitting...">
+    <div class="reservation-form">
+      <h2>Reservation Request</h2>
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="12">
+            <!-- Tipo de mesa CORREGIDO -->
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Table Type</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Required">
+                <input
+                  nz-input
+                  placeholder="Select Table Type"
+                  formControlName="tableType"
+                  (focus)="onTableInputFocus()"
+                  (blur)="onTableInputBlur()"
+                  class="table-input"
+                  readonly
+                />
+                
+                <!-- Mostramos las opciones como botones cuando el input está enfocado -->
+                <div class="table-options-container" *ngIf="showTableOptions">
+                  <div
+                    *ngFor="let table of TableOptions"
+                    class="table-option-button"
+                    (mouseenter)="onTableHover(table)"
+                    (click)="selectTable(table)"
+                    [class.selected]="table.type === validateForm.get('tableType')?.value"
+                  >
+                    <span class="table-name">{{ table.type }}</span>
+                    <span class="table-guests">Max: {{ table.maxGuests }} guests</span>
+                  </div>
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+
+            <!-- El resto del formulario se mantiene igual -->
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Select Date and Time</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Required">
+                <nz-date-picker
+                  class="custom-date-picker"
+                  formControlName="dateTime"
+                  [nzDisabledDate]="disablePastDates"
+                  nzFormat="yyyy-MM-dd HH:mm"
+                  [nzShowTime]="true"
+                  [nzDefaultPickerValue]="defaultTime"
+                  nzPlaceHolder="Select date and time"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Number of Guests</nz-form-label>
+              <nz-form-control
+                [nzSpan]="24"
+                [nzErrorTip]="
+                  validateForm.get('guests')?.hasError('required')
+                    ? 'Please enter number of guests'
+                    : selectedTable &&
+                      validateForm.get('guests')?.hasError('maxExceeded')
+                    ? 'This table allows a maximum of ' +
+                      selectedTable.maxGuests +
+                      ' guests.'
+                    : null
+                "
+              >
+                <input nz-input type="number" formControlName="guests" />
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Description</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Required">
+                <textarea
+                  nz-input
+                  formControlName="description"
+                  rows="3"
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Payment Method</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Required">
+                <nz-select
+                  nzPlaceHolder="Select payment method"
+                  formControlName="paymentMethod"
+                >
+                  <nz-option nzLabel="Credit / Debit Card" nzValue="card"></nz-option>
+                  <nz-option nzLabel="Cash" nzValue="cash"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <div *ngIf="validateForm.get('paymentMethod')?.value === 'card'">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">Card Provider</nz-form-label>
+                <nz-form-control [nzSpan]="24" nzErrorTip="Required">
+                  <nz-select
+                    nzPlaceHolder="Select provider"
+                    formControlName="cardProvider"
+                  >
+                    <nz-option nzLabel="Nequi" nzValue="Nequi"></nz-option>
+                    <nz-option nzLabel="Bancolombia" nzValue="Bancolombia"></nz-option>
+                    <nz-option nzLabel="Visa" nzValue="Visa"></nz-option>
+                    <nz-option nzLabel="MasterCard" nzValue="MasterCard"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">Card Number</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    nz-input
+                    type="text"
+                    maxlength="16"
+                    placeholder="Ejemplo: 4111 1111 1111 1111"
+                    formControlName="cardNumber"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <button
+              nz-button
+              nzType="primary"
+              class="submit-btn"
+              [disabled]="!validateForm.valid || validateForm.get('guests')?.hasError('maxExceeded')"
+            >
+              Submit
+            </button>
+          </div>
+
+          <!-- Imagen de mesa -->
+          <div nz-col nzSpan="12" *ngIf="displayTable" class="image-container">
+            <div class="image-indicator">
+              <nz-tag 
+                [nzColor]="isHovering ? 'blue' : 'green'"
+                class="indicator-tag"
+              >
+                {{ isHovering ? 'Preview' : 'Selected' }}
+              </nz-tag>
+            </div>
+            <img
+              [src]="displayTable.imageUrl"
+              [alt]="displayTable.type"
+              class="table-image"
+            />
+            <p class="recommendation">{{ displayTable.recommendation }}</p>
+            <div class="table-details">
+              <p><strong>Type:</strong> {{ displayTable.type }}</p>
+              <p><strong>Max Guests:</strong> {{ displayTable.maxGuests }}</p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nz-spin>
+</div>

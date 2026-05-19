@@ -1,0 +1,45 @@
+<nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" nzTip="Working...">
+  <div class="table-container">
+    <nz-table #basicTable [nzData]="reservations" [nzPageSize]="20" [nzShowPagination]="'false'">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Table Type</th>
+          <th>Description</th>
+          <th>Reservation Time</th>
+          <th>Reservation Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of basicTable.data">
+          <td>{{ reservation.username }}</td>
+          <td>{{ reservation.tableType }}</td>
+          <td class="description-cell">{{ reservation.description }}</td>
+          <td>{{ reservation.dateTime | date: 'h:mm a' }}</td>
+          <td>{{ reservation.dateTime | date }}</td>
+          <td>
+            <span class="status-badge" [class]="reservation.reservationStatus.toLowerCase()">
+              {{ reservation.reservationStatus }}
+            </span>
+          </td>
+          <td>
+  <span *ngIf="reservation.reservationStatus === 'PENDING'">
+    <div class="action-buttons-container">
+      <button class="action-btn approve" nzSize="small" nz-button
+              (click)="changeReservationStatus(reservation.id, 'Approve')">
+        Approve
+      </button>
+      <button class="action-btn disapprove" nzSize="small" nz-button
+              (click)="changeReservationStatus(reservation.id, 'Disapprove')">
+        Disapprove
+      </button>
+    </div>
+  </span>
+</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</nz-spin>

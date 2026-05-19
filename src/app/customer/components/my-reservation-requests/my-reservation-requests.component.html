@@ -1,0 +1,40 @@
+<nz-spin [nzSpinning]="isSpinning" nzTip="Loading reservations..." [nzSize]="'large'">
+    <nz-table
+      #basicTable
+      [nzData]="reservations"
+      [nzPageSize]="20"
+      [nzShowPagination]="false"
+      [nzScroll]="{ x: '100%' }"
+      class="reservation-table"
+    >
+      <thead>
+        <tr>
+          <th>Table Type</th>
+          <th>Description</th>
+          <th>Time</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of basicTable.data">
+          <td>{{ reservation.tableType }}</td>
+          <td>{{ reservation.description }}</td>
+          <td>{{ reservation.dateTime | date: 'h:mm a' }}</td>
+          <td>{{ reservation.dateTime | date: 'MM/dd/yyyy' }}</td>
+          <td>
+            <nz-badge
+              [nzStatus]="
+                reservation.reservationStatus === 'APPROVED'
+                  ? 'success'
+                  : reservation.reservationStatus === 'DISAPPROVED'
+                  ? 'processing'
+                  : 'error'
+              "
+              [nzText]="reservation.reservationStatus"
+            ></nz-badge>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-spin>

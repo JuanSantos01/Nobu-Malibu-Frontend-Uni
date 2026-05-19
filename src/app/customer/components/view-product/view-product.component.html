@@ -1,0 +1,100 @@
+<div class="dashboard-wrapper">
+  <div class="header-container">
+    <h1 class="page-title">Explore Products</h1>
+    <p class="page-subtitle">Discover the best products in our category</p>
+  </div>
+  
+  <form nz-form [formGroup]="validateForm" (submit)="submitForm()" class="search-container">
+    <nz-input-group [nzPrefix]="prefixIcon" [nzSuffix]="clearIcon" class="search-input-group">
+      <input
+        nz-input
+        placeholder="Search products by name..."
+        nzSize="large"
+        formControlName="title"
+        (input)="onSearchChange()"
+      />
+    </nz-input-group>
+    <ng-template #prefixIcon>
+      <i nz-icon nzType="search" class="search-icon"></i>
+    </ng-template>
+    <ng-template #clearIcon>
+      <i 
+        nz-icon 
+        nzType="close-circle" 
+        *ngIf="validateForm.get('title')?.value" 
+        (click)="clearSearch()"
+        class="clear-icon"
+      ></i>
+    </ng-template>
+    <button nz-button [nzSize]="size" nzType="primary" [disabled]="validateForm.invalid" class="search-button">
+      <span>Search</span>
+      <i nz-icon nzType="arrow-right" class="button-icon"></i>
+    </button>
+  </form>
+
+  <div class="results-info" *ngIf="Products.length > 0">
+    <p>{{ Products.length }} product(s) found</p>
+  </div>
+
+  <div class="categories-list" *ngIf="Products.length > 0; else emptyState">
+    <div class="product-card" *ngFor="let product of Products; let i = index" [@fadeInUp]>
+      <div nz-row [nzGutter]="16" class="product-row">
+        <div nz-col [nzXs]="24" [nzSm]="8" class="image-col">
+          <div class="image-container">
+            <img
+              class="product-image"
+              [src]="product.processedImg"
+              alt="{{ product.name }}"
+              (error)="handleImageError($event)"
+            />
+            <div class="category-badge">{{ product.categoryName }}</div>
+          </div>
+        </div>
+        <div nz-col [nzXs]="24" [nzSm]="16" class="details-col">
+          <h2 class="product-name">{{ product.name }}</h2>
+          <p class="product-description">{{ product.description }}</p>
+          
+          <div class="product-meta">
+            <div class="price-tag">
+              <span class="price-label">Price:</span>
+              <span class="price-value">{{ formatPrice(product.price) }}</span>
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <button 
+              nz-button 
+              nzType="primary" 
+              class="action-btn"
+              nz-tooltip
+              [nzTooltipTitle]="getBriefDescription(product)"
+              nzTooltipPlacement="top"
+            >
+              <i nz-icon nzType="eye"></i>
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state" [@fadeIn]>
+      <div class="empty-icon">
+        <i nz-icon nzType="inbox" nzTheme="outline"></i>
+      </div>
+      <h3>No products found</h3>
+      <p>Try different search terms or explore our categories</p>
+      <button nz-button nzType="primary" (click)="clearSearch()" *ngIf="validateForm.get('title')?.value">
+        <i nz-icon nzType="reload"></i>
+        Show all products
+      </button>
+    </div>
+  </ng-template>
+
+  <div class="loading-spinner" *ngIf="isSpinning">
+    <nz-spin nzSimple></nz-spin>
+    <p>Loading products...</p>
+  </div>
+</div>

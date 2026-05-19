@@ -1,0 +1,53 @@
+<div class="form-container">
+    <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" nzTip="Working...">
+        <div class="form-content">
+            <h2 class="form-title">Post Product</h2>
+
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                <div nz-row>
+                    <div nz-col nzSpan="24" class="profile-upload">
+                        <label for="upload_profile_image" class="upload-label">
+                            <div class="image-preview" [class.has-image]="imagePreview">
+                                <img *ngIf="imagePreview" class="preview-image" [src]="imagePreview" alt="Preview">
+                                <span *ngIf="!imagePreview" class="upload-text">+ Add Image</span>
+                            </div>
+                        </label>
+                        <input type="file" id="upload_profile_image"
+                               accept="image/x-png,image/gif,image/jpeg" 
+                               (change)="onFileSelected($event)">
+                    </div>
+
+                    <div nz-col nzSpan="24" class="form-field">
+                        <nz-form-item>
+                            <nz-form-control nzHasFeedback [nzErrorTip]="'This Input Is Required!'">
+                                <input nz-input placeholder="Name" formControlName="name" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24" class="form-field">
+                        <nz-form-item>
+                            <nz-form-control nzHasFeedback [nzErrorTip]="'This Input Is Required!'">
+                                <input nz-input type="number" placeholder="Price" formControlName="price" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24" class="form-field">
+                        <nz-form-item>
+                            <nz-form-control nzHasFeedback [nzErrorTip]="'This Input Is Required!'">
+                                <textarea rows="3" nz-input placeholder="Description" 
+                                          formControlName="description"></textarea>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <button nz-button class="submit-button" [nzType]="'primary'" 
+                        [disabled]="validateForm.invalid || !selectedFile">
+                    Add
+                </button>
+            </form>
+        </div>
+    </nz-spin>
+</div>

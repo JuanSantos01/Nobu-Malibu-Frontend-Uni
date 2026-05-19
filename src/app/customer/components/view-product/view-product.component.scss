@@ -1,0 +1,378 @@
+// Variables
+$primary-bg: #fdf6e3;
+$card-bg: #ffffff;
+$primary-color: #1890ff;
+$text-color: #333333;
+$border-radius: 12px;
+$shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+$transition: all 0.3s ease;
+
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Estilos principales
+.dashboard-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdf6e3, #f9f5f0);
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-container {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  
+  .page-title {
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1890ff, #722ed1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .page-subtitle {
+    font-size: 1.1rem;
+    color: #718096;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.search-container {
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  transition: $transition;
+  
+  &:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  .search-input-group {
+    flex: 1;
+    min-width: 300px;
+    
+    input[nz-input] {
+      font-size: 1rem;
+      border-radius: 8px;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      transition: $transition;
+      
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      }
+      
+      &:hover {
+        border-color: #cbd5e0;
+      }
+    }
+    
+    .search-icon {
+      color: #a0aec0;
+      font-size: 1.1rem;
+    }
+    
+    .clear-icon {
+      color: #a0aec0;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: $transition;
+      
+      &:hover {
+        color: #718096;
+      }
+    }
+  }
+  
+  .search-button {
+    border-radius: 8px;
+    padding: 0 24px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: $transition;
+    
+    &:not([disabled]):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+    }
+    
+    .button-icon {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.results-info {
+  max-width: 800px;
+  margin: 0 auto 1.5rem auto;
+  
+  p {
+    color: #718096;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+}
+
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.product-card {
+  padding: 24px;
+  width: 100%;
+  background-color: white;
+  box-shadow: $shadow;
+  border-radius: $border-radius;
+  margin-left: auto;
+  margin-right: auto;
+  transition: $transition;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+  
+  .product-row {
+    align-items: center;
+  }
+  
+  .image-col {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .image-container {
+    position: relative;
+    max-width: 250px;
+    
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      transition: $transition;
+      
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+    
+    .category-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(24, 144, 255, 0.9);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  }
+  
+  .details-col {
+    padding-left: 24px;
+    
+    .product-name {
+      color: #2d3748;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .product-description {
+      color: #718096;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+    
+    .product-meta {
+      margin-bottom: 1.5rem;
+      
+      .price-tag {
+        display: inline-flex;
+        align-items: center;
+        background: #f0f9ff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        
+        .price-label {
+          color: #4a5568;
+          font-size: 0.9rem;
+          margin-right: 6px;
+        }
+        
+        .price-value {
+          color: $primary-color;
+          font-weight: 700;
+          font-size: 1.2rem;
+        }
+      }
+    }
+    
+    .action-buttons {
+      .action-btn {
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: $transition;
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+        }
+      }
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease forwards;
+  
+  .empty-icon {
+    font-size: 4rem;
+    color: #cbd5e0;
+    margin-bottom: 1.5rem;
+  }
+  
+  h3 {
+    color: #4a5568;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  p {
+    color: #718096;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  button {
+    border-radius: 8px;
+    padding: 0 24px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto;
+  }
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 3rem;
+  
+  p {
+    margin-top: 1rem;
+    color: #718096;
+  }
+}
+
+// Estilos para el tooltip personalizado
+.ant-tooltip {
+  .ant-tooltip-inner {
+    background: #2d3748;
+    color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    max-width: 300px;
+    line-height: 1.4;
+  }
+  
+  .ant-tooltip-arrow {
+    &::before {
+      background: #2d3748;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  
+  .header-container {
+    margin-bottom: 2rem;
+    
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+  
+  .search-container {
+    flex-direction: column;
+    padding: 1.25rem;
+    
+    .search-input-group {
+      min-width: 100%;
+    }
+    
+    .search-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  .product-card {
+    padding: 16px;
+    
+    .details-col {
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+  }
+}
