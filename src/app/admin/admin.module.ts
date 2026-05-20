@@ -1,36 +1,40 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminComponent } from './admin.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// 🚨 CORRECCIÓN DEFINITIVA DE RUTA: Un solo nivel hacia atrás para llegar a src/app/
 import { DemoNgZorroAntdModule } from '../DemoNgZorroAntdModule';
-import { ReactiveFormsModule } from '@angular/forms';
+
+// Todos los componentes del módulo de administración
+import { InvestigacionOperacionesComponent } from './components/investigacion-operaciones/investigacion-operaciones.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DatosComponent } from './components/datos/datos.component';
 import { PostCategoryComponent } from './components/post-category/post-category.component';
 import { PostProductComponent } from './components/post-product/post-product.component';
-import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { ViewProductsComponent } from './components/view-products/view-products.component';
+import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { ViewReservationRequestsComponent } from './components/view-reservation-requests/view-reservation-requests.component';
-import { DatosComponent } from './components/datos/datos.component';
-import { PredictionComponent } from './components/prediction/prediction.component'; // ⬅️ FALTABA
+import { PredictionComponent } from './components/prediction/prediction.component';
 
 @NgModule({
   declarations: [
-    DatosComponent,
-    AdminComponent,
+    InvestigacionOperacionesComponent,
     DashboardComponent,
+    DatosComponent,
     PostCategoryComponent,
     PostProductComponent,
-    UpdateProductComponent,
     ViewProductsComponent,
+    UpdateProductComponent,
     ViewReservationRequestsComponent,
-    PredictionComponent // ⬅️ AGRÉGALO AQUÍ
+    PredictionComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule,
-    DemoNgZorroAntdModule,
-    ReactiveFormsModule // ⬅️ Esto ya estaba OK
+    DemoNgZorroAntdModule, // Al arreglarse la ruta arriba, este dejará de marcar error
+    FormsModule,
+    ReactiveFormsModule,
+    AdminRoutingModule
   ]
 })
-export class AdminModule {}
+export class AdminModule { }
