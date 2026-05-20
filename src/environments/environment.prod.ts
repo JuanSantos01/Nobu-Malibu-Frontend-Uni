@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  BASIC_URL: "https://nobu-malibu-backend-uni-2.onrender.com/"
 };
