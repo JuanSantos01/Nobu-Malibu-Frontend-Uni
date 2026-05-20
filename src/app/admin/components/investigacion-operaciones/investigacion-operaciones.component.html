@@ -1,12 +1,12 @@
-
 <div class="nobu-premium-container">
-  <div class="section-header-wrapper" nz-row nzJustify="space-between" nzAlign="middle">
-    <div nz-col>
+  
+  <div class="premium-header-flex">
+    <div class="header-text">
       <h1 class="premium-title">Optimización de Salones</h1>
       <p class="premium-subtitle">Configuración avanzada de variables y asignación eficiente de mesas.</p>
     </div>
-    <div nz-col>
-      <button nz-button class="nobu-gold-btn" style="margin-right: 10px; background: transparent; border: 1px solid #C5A880; color: #C5A880;" (click)="toggleExplicacion()">
+    <div class="header-action-block">
+      <button nz-button class="nobu-outline-btn" (click)="toggleExplicacion()">
         <span nz-icon nzType="book"></span> {{ verExplicacion ? 'Ocultar Teoría' : 'Ver Fundamento Técnico' }}
       </button>
       <button nz-button nzType="primary" class="nobu-gold-btn" (click)="submitForm()">
@@ -17,31 +17,33 @@
 
   <nz-divider class="premium-divider"></nz-divider>
 
-  <div *ngIf="verExplicacion" class="premium-card-panel" style="border-left: 4px solid #C5A880; margin-bottom: 20px; background: #1A1A1A;">
+  <div *ngIf="verExplicacion" class="premium-card-panel technical-theory-card">
     <h3 class="panel-section-title gold-text"><span nz-icon nzType="solution"></span> Fundamentación Matemática del Modelo</h3>
-    <p style="color: #FDFCF5; font-size: 14px; line-height: 1.6;">
+    <p class="theory-description">
       Este módulo resuelve un <strong>Problema de Asignación de Recursos con Restricciones Lineales</strong>. El algoritmo procesa los datos de entrada para encontrar el punto de equilibrio operativo óptimo.
     </p>
     
-    <div style="background: #111; padding: 15px; border-radius: 6px; margin: 15px 0; font-family: monospace; color: #C5A880;">
+    <div class="math-box">
       <strong>Formulación Estándar (IO):</strong><br>
       • Función Objetivo: Minimizar Z = Costo_Mesa × Mesas_Abiertas<br>
       • Restricción 1 (Demanda): (Mesas_Abiertas × Capacidad_Mesa) ≥ Invitados<br>
       • Restricción 2 (Física): Mesas_Abiertas ≤ Total_Mesas_Disponibles
     </div>
 
-    <h4 class="gold-text" style="margin-top: 10px;">Ejemplo Práctico de Procesamiento:</h4>
-    <p style="color: #A6A6A6; font-size: 13px;">
+    <h4 class="gold-text" style="margin-top: 15px; font-size: 14px;">Ejemplo Práctico de Procesamiento:</h4>
+    <p class="theory-example">
       Si configuras <strong>5 invitados</strong> y un inventario de <strong>7 mesas</strong>: El modelo calcula mediante la función techo que requieres matemáticamente 2 mesas para mantener el confort (4 personas por mesa). Como 2 ≤ 7, el sistema aprueba abrir únicamente 2 mesas, minimizando el costo operativo total a solo 2 unidades de tasa de limpieza.
     </p>
   </div>
 
   <div class="premium-card-panel">
     <form nz-form [formGroup]="validateForm" nzLayout="vertical">
-      <div nz-row [nzGutter]="24">
+      
+      <div class="main-responsive-wrapper">
         
-        <div nz-col nzXs="24" nzLg="14">
+        <div class="form-fields-section">
           <h3 class="panel-section-title"><span nz-icon nzType="setting"></span> Variables del Modelo</h3>
+          
           <div class="input-grid">
             
             <nz-form-item class="premium-form-item">
@@ -74,13 +76,13 @@
           </div>
         </div>
 
-        <div nz-col nzXs="24" nzLg="10">
+        <div class="summary-card-section">
           <div class="status-summary-card">
             <h3 class="panel-section-title gold-text"><span nz-icon nzType="dashboard"></span> Solución del Modelo</h3>
             
             <div *ngIf="!mostrarResultados" class="waiting-state">
-              <p style="color: #A6A6A6;">Introduzca las variables operativas y presione "Ejecutar Optimización".</p>
-              <span class="value status-badge pending">Esperando Ejecución</span>
+              <p>Introduzca las variables operativas y presione "Ejecutar Optimización".</p>
+              <span class="status-badge pending">Esperando Ejecución</span>
             </div>
 
             <div *ngIf="mostrarResultados" class="results-state">
@@ -101,11 +103,11 @@
                 <span class="value gold-text">{{ eficiencia }}%</span>
               </div>
               
-              <nz-divider style="background: rgba(197, 168, 128, 0.2); margin: 10px 0;"></nz-divider>
+              <nz-divider class="inner-divider"></nz-divider>
               
-              <div class="summary-item">
-                <span class="label" style="font-weight: bold; color: #FDFCF5;">Costo Mínimo Total (Z):</span>
-                <span class="value gold-text" style="font-size: 18px; font-weight: bold;">${{ costoTotal }} USD</span>
+              <div class="summary-item total-row">
+                <span class="label">Costo Mínimo Total (Z):</span>
+                <span class="value gold-text">${{ costoTotal }} USD</span>
               </div>
             </div>
 
