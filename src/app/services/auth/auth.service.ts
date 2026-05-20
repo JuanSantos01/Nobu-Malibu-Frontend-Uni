@@ -9,26 +9,21 @@ import { UserStorageService } from '../storage/user-storage.service';
 })
 export class AuthService {
 
-  // Getter para obtener la URL base siempre desde el entorno actual
+  // Usamos un getter para acceder al valor en tiempo real y evitar el 'undefined'
   private get baseUrl() {
     return environment.BASIC_URL;
   }
 
   constructor(private http: HttpClient) {}
 
-  // =========================
-  // 🔐 LOGIN NORMAL
-  // =========================
   login(loginRequest: any): Observable<any> {
+    // La concatenación es segura al usar el getter
     return this.http.post(`${this.baseUrl}api/auth/login`, loginRequest).pipe(
       tap(() => this.log('Login request sent')),
       catchError(this.handleError('Login failed'))
     );
   }
 
-  // =========================
-  // 🔥 LOGIN CON GOOGLE
-  // =========================
   loginWithGoogle(idToken: string): Observable<any> {
     return this.http.post(`${this.baseUrl}api/auth/google`, { idToken }).pipe(
       tap(() => this.log('Google login request sent')),
@@ -36,9 +31,6 @@ export class AuthService {
     );
   }
 
-  // =========================
-  // 📝 REGISTER
-  // =========================
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}api/auth/signup`, data).pipe(
       tap(() => this.log('Register request sent')),
@@ -46,12 +38,8 @@ export class AuthService {
     );
   }
 
-  // =========================
-  // 👤 GET USER
-  // =========================
   getUserById(): Observable<any> {
     const userId = UserStorageService.getUserId();
-
     return this.http.get(`${this.baseUrl}api/auth/user/${userId}`, {
       headers: this.createAuthorizationHeader(),
     }).pipe(
@@ -60,9 +48,6 @@ export class AuthService {
     );
   }
 
-  // =========================
-  // ✏️ UPDATE USER
-  // =========================
   updateUser(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}api/auth/update`, data, {
       headers: this.createAuthorizationHeader(),
@@ -72,36 +57,24 @@ export class AuthService {
     );
   }
 
-  // =========================
-  // 🔐 HEADER JWT
-  // =========================
   private createAuthorizationHeader(): HttpHeaders {
     const token = UserStorageService.getToken();
-
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
   }
 
-  // =========================
-  // 🧠 LOG
-  // =========================
   private log(message: string): void {
     console.log(`[AuthService]: ${message}`);
   }
 
-  // =========================
-  // ⚠️ HANDLE ERROR
-  // =========================
   private handleError(operation = 'operation', result?: any) {
     return (error: any): Observable<any> => {
       console.error(`❌ ${operation}:`, error);
-
       if (error.status === 0) {
-        console.error('🚨 Backend no responde (CORS o servidor apagado)');
+        console.error('🚨 Backend no responde (posible error de CORS o URL incorrecta)');
       }
-
       return of(result);
     };
   }
