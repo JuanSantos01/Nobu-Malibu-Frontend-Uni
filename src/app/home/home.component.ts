@@ -1,4 +1,5 @@
 import { Component, HostListener, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -162,7 +163,7 @@ export class HomeComponent implements AfterViewInit {
     this.scrollToBottom();
 
     try {
-  const response = await fetch('http://localhost:8080/api/chatbot/chat', {
+const response = await fetch(`${environment.BASIC_URL}api/chatbot/chat`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
