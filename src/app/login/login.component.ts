@@ -34,11 +34,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // 🔥 SE EJECUTA CUANDO YA EXISTE EL HTML
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.loadGoogle();
-    }, 500); // 🔥 pequeña espera evita errores
+    }, 500);
   }
 
   // =========================
@@ -70,7 +69,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
       width: 250
     });
 
-    // 🔥 OPCIONAL (mejora UX)
     google.accounts.id.prompt();
   }
 
@@ -78,19 +76,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
   // 🔥 LOGIN GOOGLE
   // =========================
   handleGoogleLogin(response: any) {
-
     if (!response || !response.credential) {
       console.error('❌ No viene token de Google');
       return;
     }
 
     const token = response.credential;
-
     console.log("✅ TOKEN GOOGLE:", token);
 
     this.authService.loginWithGoogle(token).subscribe({
       next: (res: any) => {
-
         console.log("✅ BACKEND RESPONSE:", res);
 
         if (!res || !res.jwt) {
@@ -106,6 +101,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         UserStorageService.saveUser(user);
         UserStorageService.saveToken(res.jwt);
 
+        // 🔥 OBLIGATORIO: Avisarle al AuthService que actualice el estado del Navbar
+        this.authService.updateAuthState();
+
         if (UserStorageService.isAdminLoggedIn()) {
           this.router.navigateByUrl('admin/dashboard');
         } else {
@@ -120,7 +118,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         console.error("❌ GOOGLE LOGIN ERROR:", err);
-
         this.notification.error(
           'ERROR',
           'Google login failed',
@@ -150,7 +147,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.isSpinning = false;
 
         if (res && res.userId != null) {
-
           const user = {
             id: res.userId,
             role: res.userRole
@@ -158,6 +154,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
           UserStorageService.saveUser(user);
           UserStorageService.saveToken(res.jwt);
+
+          // 🔥 OBLIGATORIO: Avisarle al AuthService que actualice el estado del Navbar
+          this.authService.updateAuthState();
 
           if (UserStorageService.isAdminLoggedIn()) {
             this.router.navigateByUrl('admin/dashboard');
