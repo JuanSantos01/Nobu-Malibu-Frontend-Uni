@@ -1,0 +1,118 @@
+
+<div class="nobu-premium-container">
+  <div class="section-header-wrapper" nz-row nzJustify="space-between" nzAlign="middle">
+    <div nz-col>
+      <h1 class="premium-title">Optimización de Salones</h1>
+      <p class="premium-subtitle">Configuración avanzada de variables y asignación eficiente de mesas.</p>
+    </div>
+    <div nz-col>
+      <button nz-button class="nobu-gold-btn" style="margin-right: 10px; background: transparent; border: 1px solid #C5A880; color: #C5A880;" (click)="toggleExplicacion()">
+        <span nz-icon nzType="book"></span> {{ verExplicacion ? 'Ocultar Teoría' : 'Ver Fundamento Técnico' }}
+      </button>
+      <button nz-button nzType="primary" class="nobu-gold-btn" (click)="submitForm()">
+        <span nz-icon nzType="rocket"></span> Ejecutar Optimización
+      </button>
+    </div>
+  </div>
+
+  <nz-divider class="premium-divider"></nz-divider>
+
+  <div *ngIf="verExplicacion" class="premium-card-panel" style="border-left: 4px solid #C5A880; margin-bottom: 20px; background: #1A1A1A;">
+    <h3 class="panel-section-title gold-text"><span nz-icon nzType="solution"></span> Fundamentación Matemática del Modelo</h3>
+    <p style="color: #FDFCF5; font-size: 14px; line-height: 1.6;">
+      Este módulo resuelve un <strong>Problema de Asignación de Recursos con Restricciones Lineales</strong>. El algoritmo procesa los datos de entrada para encontrar el punto de equilibrio operativo óptimo.
+    </p>
+    
+    <div style="background: #111; padding: 15px; border-radius: 6px; margin: 15px 0; font-family: monospace; color: #C5A880;">
+      <strong>Formulación Estándar (IO):</strong><br>
+      • Función Objetivo: Minimizar Z = Costo_Mesa × Mesas_Abiertas<br>
+      • Restricción 1 (Demanda): (Mesas_Abiertas × Capacidad_Mesa) ≥ Invitados<br>
+      • Restricción 2 (Física): Mesas_Abiertas ≤ Total_Mesas_Disponibles
+    </div>
+
+    <h4 class="gold-text" style="margin-top: 10px;">Ejemplo Práctico de Procesamiento:</h4>
+    <p style="color: #A6A6A6; font-size: 13px;">
+      Si configuras <strong>5 invitados</strong> y un inventario de <strong>7 mesas</strong>: El modelo calcula mediante la función techo que requieres matemáticamente 2 mesas para mantener el confort (4 personas por mesa). Como 2 ≤ 7, el sistema aprueba abrir únicamente 2 mesas, minimizando el costo operativo total a solo 2 unidades de tasa de limpieza.
+    </p>
+  </div>
+
+  <div class="premium-card-panel">
+    <form nz-form [formGroup]="validateForm" nzLayout="vertical">
+      <div nz-row [nzGutter]="24">
+        
+        <div nz-col nzXs="24" nzLg="14">
+          <h3 class="panel-section-title"><span nz-icon nzType="setting"></span> Variables del Modelo</h3>
+          <div class="input-grid">
+            
+            <nz-form-item class="premium-form-item">
+              <nz-form-label>Capacidad Máxima (Invitados)</nz-form-label>
+              <nz-form-control nzErrorTip="Requerido">
+                <nz-input-group nzPrefixIcon="team" class="premium-input-group">
+                  <input nz-input formControlName="capacidadMaxima" type="number" placeholder="Ej: 150" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item class="premium-form-item">
+              <nz-form-label>Mesas Totales Disponibles</nz-form-label>
+              <nz-form-control nzErrorTip="Requerido">
+                <nz-input-group nzPrefixIcon="appstore" class="premium-input-group">
+                  <input nz-input formControlName="mesasDisponibles" type="number" placeholder="Ej: 40" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item class="premium-form-item">
+              <nz-form-label>Costo Operativo por Mesa ($)</nz-form-label>
+              <nz-form-control nzErrorTip="Requerido">
+                <nz-input-group nzPrefixIcon="dollar" class="premium-input-group">
+                  <input nz-input formControlName="costoMesa" type="number" placeholder="Ej: 50" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+          </div>
+        </div>
+
+        <div nz-col nzXs="24" nzLg="10">
+          <div class="status-summary-card">
+            <h3 class="panel-section-title gold-text"><span nz-icon nzType="dashboard"></span> Solución del Modelo</h3>
+            
+            <div *ngIf="!mostrarResultados" class="waiting-state">
+              <p style="color: #A6A6A6;">Introduzca las variables operativas y presione "Ejecutar Optimización".</p>
+              <span class="value status-badge pending">Esperando Ejecución</span>
+            </div>
+
+            <div *ngIf="mostrarResultados" class="results-state">
+              <div class="summary-item">
+                <span class="label">Mesas Sugeridas a Abrir:</span>
+                <span class="value gold-text">{{ mesasOptimas }} mesas</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Distribución Máxima:</span>
+                <span class="value">{{ personasPorMesa }} pers/mesa</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Capacidad de Soporte:</span>
+                <span class="value">{{ capacidadUtilizada }} espacios</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Eficiencia Operativa:</span>
+                <span class="value gold-text">{{ eficiencia }}%</span>
+              </div>
+              
+              <nz-divider style="background: rgba(197, 168, 128, 0.2); margin: 10px 0;"></nz-divider>
+              
+              <div class="summary-item">
+                <span class="label" style="font-weight: bold; color: #FDFCF5;">Costo Mínimo Total (Z):</span>
+                <span class="value gold-text" style="font-size: 18px; font-weight: bold;">${{ costoTotal }} USD</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

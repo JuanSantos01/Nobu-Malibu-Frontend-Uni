@@ -1,0 +1,159 @@
+// Paleta de Colores Nobu Malibu
+$nobu-black: #1A1A1A;     // Negro mate de fondo
+$nobu-dark-grey: #262626; // Fondo de tarjetas
+$nobu-gold: #D4AF37;      // Oro texturizado (Accent)
+$nobu-gold-hover: #F1D36E; // Oro brillante para hovers
+$nobu-cream: #FDFCF5;     // Beige crema para textos
+$nobu-grey-text: #A0A0A0; // Texto secundario
+
+.nobu-premium-container {
+  padding: 30px;
+  background-color: $nobu-black;
+  min-height: 100vh;
+  color: $nobu-cream;
+  font-family: 'Tenor Sans', sans-serif; // Una fuente elegante si la tienes
+
+  // Títulos Premium
+  .premium-title {
+    color: $nobu-gold;
+    font-size: 32px;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+  }
+
+  .premium-subtitle {
+    color: $nobu-grey-text;
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+
+  // Divisor Dorado Sutil
+  .premium-divider {
+    background: rgba($nobu-gold, 0.2);
+    margin: 25px 0;
+  }
+
+  // Panel Principal (Tarjeta)
+  .premium-card-panel {
+    background-color: $nobu-dark-grey;
+    border: 1px solid rgba($nobu-gold, 0.1);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 12px 40px rgba($nobu-gold, 0.1);
+    }
+  }
+
+  .panel-section-title {
+    color: $nobu-cream;
+    font-size: 18px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &.gold-text {
+      color: $nobu-gold;
+    }
+  }
+
+  // Grilla de Inputs Intuitiva
+  .input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  // Estilos de Formulario Premium
+  .premium-form-item {
+    margin-bottom: 15px;
+
+    ::ng-deep .nz-form-item-label > label {
+      color: $nobu-grey-text;
+      font-size: 14px;
+    }
+  }
+
+  // Inputs con Transiciones
+  .premium-input-group {
+    background-color: rgba(black, 0.2);
+    border: 1px solid rgba($nobu-gold, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    ::ng-deep .ant-input-prefix {
+      color: $nobu-gold;
+    }
+
+    ::ng-deep input {
+      background-color: transparent;
+      color: $nobu-cream;
+      border: none;
+
+      &::placeholder {
+        color: rgba($nobu-cream, 0.3);
+      }
+    }
+
+    &:hover, &-focused {
+      border-color: $nobu-gold;
+      box-shadow: 0 0 8px rgba($nobu-gold, 0.3);
+    }
+  }
+
+  // Botón Dorado Nobu
+  .nobu-gold-btn {
+    background-color: $nobu-gold;
+    border-color: $nobu-gold;
+    color: $nobu-black;
+    font-weight: 600;
+    border-radius: 8px;
+    height: 45px;
+    padding: 0 25px;
+    transition: all 0.3s ease;
+
+    &:hover, &:focus {
+      background-color: $nobu-gold-hover;
+      border-color: $nobu-gold-hover;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba($nobu-gold, 0.4);
+    }
+  }
+
+  // Tarjeta de Resumen Lateral
+  .status-summary-card {
+    background-color: rgba(black, 0.3);
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px dashed rgba($nobu-gold, 0.3);
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 15px;
+
+      .label { color: $nobu-grey-text; }
+      .value { color: $nobu-cream; font-weight: 500; }
+    }
+
+    .gold-text { color: $nobu-gold !important; }
+  }
+
+  // Badges de Estado
+  .status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.pending {
+      background-color: rgba($nobu-gold, 0.1);
+      color: $nobu-gold;
+      border: 1px solid rgba($nobu-gold, 0.3);
+    }
+  }
+}
