@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from '../guards/authAdmin/admin.guard';
 
 // Components
+import { InvestigacionOperacionesComponent } from './components/investigacion-operaciones/investigacion-operaciones.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DatosComponent } from './components/datos/datos.component';
 import { PostCategoryComponent } from './components/post-category/post-category.component';
@@ -15,6 +16,9 @@ import { ViewReservationRequestsComponent } from './components/view-reservation-
 import { PredictionComponent } from './components/prediction/prediction.component';
 
 const routes: Routes = [
+  // ⬇️ SE QUITO EL GUARD TEMPORALMENTE PARA QUE PUEDAS ENTRAR DIRECTO A VER TU PANTALLA
+  { path: 'modelo-io', component: InvestigacionOperacionesComponent },
+  
   // Información inicial
   { path: 'datos', component: DatosComponent },
 
