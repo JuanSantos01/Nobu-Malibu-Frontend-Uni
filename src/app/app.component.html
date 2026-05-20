@@ -1,4 +1,3 @@
-<!-- Header para usuarios no logueados -->
 <div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
   <nz-header class="main-header">
     <div class="nav-container">
@@ -16,7 +15,6 @@
         <span></span>
       </div>
       
-      <!-- Overlay para cerrar el menú -->
       <div class="nav-overlay" [class.open]="menuOpen" (click)="closeMenu()"></div>
       
       <div class="nav-links" [class.open]="menuOpen">
@@ -37,7 +35,6 @@
   </nz-header>
 </div>
 
-<!-- Header para admin -->
 <div *ngIf="isAdminLoggedIn">
   <nz-header class="main-header">
     <div class="nav-container">
@@ -55,7 +52,6 @@
         <span></span>
       </div>
       
-      <!-- Overlay para cerrar el menú -->
       <div class="nav-overlay" [class.open]="menuOpen" (click)="closeMenu()"></div>
       
       <div class="nav-links" [class.open]="menuOpen">
@@ -71,6 +67,12 @@
           <span class="nav-icon">📅</span>
           <span class="nav-text">Reservations</span>
         </a>
+        
+        <a nz-button nzType="link" routerLink="/admin/modelo-io" routerLinkActive="active" (click)="closeMenu()">
+          <span class="nav-icon">🧮</span>
+          <span class="nav-text">Optimización IO</span>
+        </a>
+
         <a nz-button nzType="link" routerLink="/admin/prediction" routerLinkActive="active" (click)="closeMenu()">
           <span class="nav-icon">🔮</span>
           <span class="nav-text">Prediction</span>
@@ -88,7 +90,6 @@
   </nz-header>
 </div>
 
-<!-- Header para customer -->
 <div *ngIf="isCustomerLoggedIn">
   <nz-header class="main-header">
     <div class="nav-container">
@@ -106,7 +107,6 @@
         <span></span>
       </div>
       
-      <!-- Overlay para cerrar el menú -->
       <div class="nav-overlay" [class.open]="menuOpen" (click)="closeMenu()"></div>
       
       <div class="nav-links" [class.open]="menuOpen">
@@ -131,7 +131,6 @@
   </nz-header>
 </div>
 
-<!-- Modal de confirmación para logout -->
 <nz-modal 
   [(nzVisible)]="isLogoutModalVisible"
   nzTitle="Confirm Logout" 
