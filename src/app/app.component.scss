@@ -73,6 +73,8 @@ $white-one: #fcfcfc;
   top: 0;
   left: 0;
   width: 100%;
+  height: 80px;        // 🔥 CORRECCIÓN: Fuerza al header a medir 80px
+  line-height: normal; // 🔥 CORRECCIÓN: Elimina los 64px de line-height por defecto de NG-ZORRO
   z-index: 1000;
   background-color: $primary-color;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
@@ -83,7 +85,7 @@ $white-one: #fcfcfc;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1400px; // 🔥 Ampliado de 1200px a 1400px para dar más espacio horizontal a las opciones
+    max-width: 1400px; 
     margin: 0 auto;
     padding: 0 1.5rem;
     height: 80px;
@@ -96,7 +98,7 @@ $white-one: #fcfcfc;
     gap: 12px;
     z-index: 1002;
     transition: all 0.3s ease;
-    flex-shrink: 0; // 🔥 Evita que el contenedor del logo se aplaste cuando hay muchas opciones
+    flex-shrink: 0; 
 
     .logo {
       width: 45px;
@@ -115,13 +117,13 @@ $white-one: #fcfcfc;
 
     .brand-name {
       color: $white;
-      font-size: 1.3rem; // 🔥 Ajustado sutilmente para balancear el espacio
+      font-size: 1.3rem; 
       font-weight: 700;
       text-decoration: none;
       letter-spacing: 0.5px;
       transition: all 0.3s ease;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      white-space: nowrap; // 🔥 CRÍTICO: Fuerza a que Nobu Malibu se mantenga en una sola línea horizontal siempre
+      white-space: nowrap; 
 
       .brand-short {
         display: none;
@@ -147,20 +149,20 @@ $white-one: #fcfcfc;
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 6px; // 🔥 Reducido de 12px a 6px para que entren todas las opciones con elegancia sin amontonarse
+    gap: 6px; 
 
     a {
       color: $white;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.9rem; // 🔥 Ajustado para optimizar el espacio horizontal
-      padding: 8px 14px; // 🔥 Reducido padding interno para que no floten cajas gigantescas
+      font-size: 0.9rem; 
+      padding: 8px 14px; 
       border-radius: 8px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       border: none;
-      background: transparent !important; // 🔥 CORRECCIÓN CRÍTICA: Elimina cualquier fondo raro o azul por defecto de NG-ZORRO
-      box-shadow: none !important; // 🔥 Quita sombras pesadas que rompen la estética plana
+      background: transparent !important; 
+      box-shadow: none !important; 
       display: flex;
       align-items: center;
       gap: 6px;
@@ -178,7 +180,7 @@ $white-one: #fcfcfc;
       }
 
       &:hover {
-        background-color: rgba($secondary-color, 0.95) !important; // 🔥 Ahora el hover aplica parejo para todos
+        background-color: rgba($secondary-color, 0.95) !important; 
         color: $white !important;
         transform: translateY(-2px);
         box-shadow: 0 4px 15px rgba($secondary-color, 0.3) !important;
@@ -193,7 +195,7 @@ $white-one: #fcfcfc;
       }
 
       &.active {
-        background-color: $secondary-color !important; // 🔥 El botón activo (incluido Optimización) se pintará azul marino premium completo
+        background-color: $secondary-color !important; 
         color: $white !important;
         box-shadow: 0 4px 15px rgba($secondary-color, 0.4) !important;
         animation: pulse 2s infinite;
@@ -219,11 +221,11 @@ $white-one: #fcfcfc;
       .nav-text {
         position: relative;
         z-index: 1;
-       white-space: nowrap; // 🔥 Evita saltos de línea internos en textos de botones largos
+        white-space: nowrap; 
       }
 
       &.logout-btn {
-        background-color: rgba(220, 53, 69, 0.9) !important; // Mantiene su color rojo de alerta intacto
+        background-color: rgba(220, 53, 69, 0.9) !important; 
         color: $white !important;
         
         &:hover {
@@ -244,6 +246,8 @@ $white-one: #fcfcfc;
 // ===== RESPONSIVE PARA TABLETS (1024px - 769px) =====
 @media only screen and (max-width: 1024px) and (min-width: 769px) {
   .main-header {
+    height: 75px; // 🔥 CORRECCIÓN: Ajuste de alto para tablet
+
     .nav-container {
       padding: 0 1rem;
       height: 75px;
@@ -286,6 +290,8 @@ $white-one: #fcfcfc;
 // ===== RESPONSIVE PARA MÓVILES (768px o menos) =====
 @media only screen and (max-width: 768px) {
   .main-header {
+    height: 70px; // 🔥 CORRECCIÓN: Ajuste de alto para móvil estándar
+
     .nav-container {
       padding: 0 1rem;
       height: 70px;
@@ -336,7 +342,7 @@ $white-one: #fcfcfc;
         border-radius: 2px;
       }
 
-      &.open {
+      .open {
         span:nth-child(1) {
           transform: rotate(45deg) translate(5px, 5px);
           background-color: $secondary-color;
@@ -447,6 +453,8 @@ $white-one: #fcfcfc;
 // ===== RESPONSIVE PARA MÓVILES PEQUEÑOS (480px o menos) =====
 @media only screen and (max-width: 480px) {
   .main-header {
+    height: 65px; // 🔥 CORRECCIÓN: Ajuste de alto para pantallas muy pequeñas
+
     .nav-container {
       padding: 0 0.8rem;
       height: 65px;
